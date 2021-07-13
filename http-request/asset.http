@@ -1,0 +1,27 @@
+###
+# upload file
+POST http://127.0.0.1:8080/upload
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="asset"; filename="gopher.png"
+
+< ./assets/gopher.png
+--WebAppBoundary
+Content-Disposition: form-data; name="label"
+
+"this is label"
+--WebAppBoundary
+Content-Disposition: form-data; name="description"
+
+"this is description"
+--WebAppBoundary--
+
+> {%
+client.test("Asset upload successfully", function() {
+ client.assert(response.status === 200, "Response status is not 200");
+});
+%}
+
+
+

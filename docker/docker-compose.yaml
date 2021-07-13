@@ -1,0 +1,27 @@
+version: '3.7'
+services:
+    mongodb:
+        image: mongo
+        container_name: mongodb
+        environment:
+            - MONGO_INITDB_DATABASE=demo
+            - MONGO_INITDB_ROOT_USERNAME=admin
+            - MONGO_INITDB_ROOT_PASSWORD=admin
+        volumes:
+            - ./buildup/mongo/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+        #            - ./tmp/mongodb:/data/db
+        ports:
+            - "27017:27017"
+    localstack:
+        container_name: localstack
+        image: localstack/localstack:latest
+        ports:
+            - "4566:4566" # Edge router
+        environment:
+            - DEBUG=1
+            - SERVICES=s3,lambda
+            - LAMBDA_EXECUTOR=docker-reuse
+            - LAMBDA_DOCKER_NETWORK=aws_local_dev_setup_default
+            - DOCKER_HOST=unix:///var/run/docker.sock
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
