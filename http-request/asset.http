@@ -1,4 +1,8 @@
 ###
+# ping
+GET http://127.0.0.1:8080/ping
+
+###
 # upload file
 POST http://127.0.0.1:8080/upload
 Content-Type: multipart/form-data; boundary=WebAppBoundary

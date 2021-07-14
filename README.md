@@ -12,7 +12,7 @@ $ docker-compose up -d
 
 - Start API server
 ```shell
-$ go run controller/main.go
+$ go run main.go
 ```
 
 - POST data to API server

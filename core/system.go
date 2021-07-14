@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-type system struct {
+type System struct {
 	repo repository.Repo
 }
 
@@ -118,6 +118,7 @@ func ConnectWithDocDB(config *DocDbConf) (*DocDB, error) {
 	return docDb, nil
 }
 
+// Hardcode for demo
 func connectMongo() (*mongo.Database, error) {
 	fmt.Printf("try to connect to mongo db")
 	dbConf := DocDbConf{
@@ -146,11 +147,11 @@ func connectMongo() (*mongo.Database, error) {
 	return client.client.Database(dbConf.DefaultDb), nil
 }
 
-func (s *system) GetRepository() *repository.Repo {
+func (s *System) GetRepository() *repository.Repo {
 	return &s.repo
 }
 
-func (s *system) Initialize() {
+func (s *System) Initialize() {
 	db, err := connectMongo()
 	if err != nil {
 		fmt.Printf("mongodb connection fail")
@@ -159,6 +160,6 @@ func (s *system) Initialize() {
 	s.repo.DB = db
 }
 
-func New() *system {
-	return &system{}
+func New() *System {
+	return &System{}
 }

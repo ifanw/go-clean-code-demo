@@ -46,14 +46,12 @@ func (assetApp *AppService) UploadFile(command UploadFileCommand) (*UploadFileRe
 		return nil, err
 	}
 
-	result := UploadFileResult{
+	return &UploadFileResult{
 		HashedFileName: asset.HashedFileName(),
 		AssertURL:      urlAsset,
 		ID:             string(asset.ID),
 		AssetStatus:    string(asset.Status),
-	}
-
-	return &result, nil
+	}, nil
 }
 
 func NewAssetAppService(repo domain.Repository,

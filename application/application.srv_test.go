@@ -48,6 +48,55 @@ func TestAssetAppService_UploadFile(t *testing.T) {
 	}
 }
 
+func TestAssetAppService_UploadFile_storage_client(t *testing.T) {
+	var memSClient *inMemStorageClient
+	var memRepo *inMemoryRepo
+	var assert *assert2.Assertions
+	type args struct {
+		file     string
+		label    string
+		filesize int64
+		userid   string
+	}
+	tests := []struct {
+		name     string
+		args     args
+		expected func(asset *UploadFileResult, err error)
+	}{
+		{
+			// Given a file named "go-go-gopher.jpg"
+			// and a Asset file "go-go-gopher.mp4"
+			// then this file should be save in S3
+
+			name: "should save to s3 if file is valid",
+			args: args{
+				file:     "go-go-gopher.mp4",
+				label:    "hooray",
+				userid:   "XX12345",
+				filesize: 100 * 1024 * 1024,
+			},
+			expected: func(_ *UploadFileResult, err error) {
+				assert.EqualValues(1, len(memSClient.asset))
+			},
+		},
+	}
+	for _, tt := range tests {
+		memRepo = newInmemoryRepo()
+		memSClient = newInMemStorageClient()
+		t.Run(tt.name, func(t *testing.T) {
+			assert = assert2.New(t)
+			appSrv := NewAssetAppService(memRepo, memSClient)
+			command := UploadFileCommand{
+				FileName: tt.args.file,
+				Label:    tt.args.label,
+				FileSize: tt.args.filesize,
+			}
+			result, err := appSrv.UploadFile(command)
+			tt.expected(result, err)
+		})
+	}
+}
+
 func TestAssetAppService_UploadFile_only_png_jpg_jpeg_mp4_mp3_pdf_Accepted(t *testing.T) {
 	var memSClient *inMemStorageClient
 	var memRepo *inMemoryRepo
@@ -234,22 +283,6 @@ func TestAssetAppService_UploadFile_only_png_jpg_jpeg_mp4_mp3_pdf_Accepted(t *te
 			expected: func(asset *UploadFileResult, err error) {
 				message := err.Error()
 				assert.Contains(message, ".mp4 file size limitation is 100mb, uploaded file is too large")
-			},
-		},
-		{
-			// Given a file named "go-go-gopher.jpg"
-			// and a Asset file "go-go-gopher.mp4"
-			// then this file should be save in S3
-
-			name: "should save to s3 if file is valid",
-			args: args{
-				file:     "go-go-gopher.mp4",
-				label:    "hooray",
-				userid:   "XX12345",
-				filesize: 100 * 1024 * 1024,
-			},
-			expected: func(_ *UploadFileResult, err error) {
-				assert.EqualValues(1, len(memSClient.asset))
 			},
 		},
 		{
