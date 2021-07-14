@@ -53,7 +53,7 @@ func (repo *assetRepo) NewID() string {
 	return uuid.NewString()
 }
 
-func NewAssetRepository(ctx context.Context, db *mongo.Database) domain.AssetRepository {
+func NewAssetRepository(ctx context.Context, db *mongo.Database) domain.Repository {
 	repo := &assetRepo{
 		collection: db.Collection("assets"),
 		ctx:        ctx,

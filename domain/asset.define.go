@@ -60,12 +60,12 @@ type NewAssetParam struct {
 	Description     string
 }
 
-type AssetRepository interface {
+type Repository interface {
 	Save(asset Asset) error
 	NewID() string
 }
 
-type AssetStorageClient interface {
+type StorageClient interface {
 	// Save a new object to a bucket and returns its URL to view/download.
 	Save(ctx context.Context, fileName string) (string, error)
 	// Delete an existing object from a bucket.

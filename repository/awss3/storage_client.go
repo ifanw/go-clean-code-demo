@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-var _ domain.AssetStorageClient = S3StorageClient{}
+var _ domain.StorageClient = S3StorageClient{}
 
 type S3StorageClient struct {
 	channel    chan io.Reader

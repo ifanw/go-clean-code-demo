@@ -8,8 +8,8 @@ import (
 )
 
 type AppService struct {
-	repo          domain.AssetRepository
-	storageClient domain.AssetStorageClient
+	repo          domain.Repository
+	storageClient domain.StorageClient
 }
 
 func (assetApp *AppService) UploadFile(command UploadFileCommand) (*UploadFileResult, error) {
@@ -56,8 +56,8 @@ func (assetApp *AppService) UploadFile(command UploadFileCommand) (*UploadFileRe
 	return &result, nil
 }
 
-func NewAssetAppService(repo domain.AssetRepository,
-	storageClient domain.AssetStorageClient) *AppService {
+func NewAssetAppService(repo domain.Repository,
+	storageClient domain.StorageClient) *AppService {
 	return &AppService{
 		repo:          repo,
 		storageClient: storageClient,

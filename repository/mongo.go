@@ -11,12 +11,12 @@ import (
 
 type Repo struct {
 	DB    *mongo.Database
-	asset domain.AssetRepository
+	asset domain.Repository
 }
 
 var onceAsset sync.Once
 
-func (r *Repo) Asset() domain.AssetRepository {
+func (r *Repo) Asset() domain.Repository {
 	onceAsset.Do(func() {
 		r.asset = mongodb.NewAssetRepository(context.Background(), r.DB)
 	})
