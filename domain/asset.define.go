@@ -12,8 +12,9 @@ type AssetShareType string
 type ShareTo string
 
 const (
-	AssetTypeImage AssetType = 1
-	AssetTypeVideo AssetType = 2
+	AssetTypeImage    AssetType = 1
+	AssetTypeVideo    AssetType = 2
+	AssetTypeDocument AssetType = 3
 )
 
 const (
@@ -27,12 +28,13 @@ var availableExt = map[string]AssetType{
 	".jpeg": AssetTypeImage,
 	".mp4":  AssetTypeVideo,
 	".mp3":  AssetTypeVideo,
-	".pdf":  AssetTypeVideo,
+	".pdf":  AssetTypeDocument,
 }
 
 var fileSizeMap = map[AssetType]int64{
-	AssetTypeImage: 10 * 1024 * 1024,  // 10 mb
-	AssetTypeVideo: 100 * 1024 * 1024, // 100 mb
+	AssetTypeImage:    10 * 1024 * 1024,  // 10 mb
+	AssetTypeVideo:    100 * 1024 * 1024, // 100 mb
+	AssetTypeDocument: 10 * 1024 * 1024,  // 10 mb
 }
 
 type Asset struct {

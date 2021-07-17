@@ -53,7 +53,7 @@ func (a *Asset) Upload(ctx *gin.Context) {
 	// hardcode for demo
 	config := awss3.AWSConfig{
 		Address: "http://localhost:4566",
-		Bucket:  "bucket.name", // you need to create
+		Bucket:  "bucket.name",
 		Region:  "us-west-2",
 		Profile: "localstack",
 		ID:      "id",
@@ -92,7 +92,7 @@ func (a *Asset) Upload(ctx *gin.Context) {
 
 	fmt.Printf("result: %+v\n", result)
 	ctx.JSON(200, gin.H{
-		"success": result,
+		"success": result.AssertURL,
 	})
 }
 
