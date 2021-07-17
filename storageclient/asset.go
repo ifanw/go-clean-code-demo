@@ -1,4 +1,4 @@
-package awss3
+package storageclient
 
 import (
 	"clean_code_demo/domain"

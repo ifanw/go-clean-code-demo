@@ -4,7 +4,7 @@ import (
 	"clean_code_demo/application"
 	"clean_code_demo/core"
 	"clean_code_demo/domain"
-	"clean_code_demo/repository/awss3"
+	"clean_code_demo/storageclient"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"io"
@@ -51,7 +51,7 @@ func (a *Asset) Upload(ctx *gin.Context) {
 	}
 
 	// hardcode for demo
-	config := awss3.AWSConfig{
+	config := storageclient.AWSConfig{
 		Address: "http://localhost:4566",
 		Bucket:  "bucket.name",
 		Region:  "us-west-2",
@@ -66,7 +66,7 @@ func (a *Asset) Upload(ctx *gin.Context) {
 
 	ch <- fileAsset
 
-	client, err := awss3.NewStorageClient(config, ch, time.Second*5)
+	client, err := storageclient.NewStorageClient(config, ch, time.Second*5)
 	if err != nil {
 		ctx.JSON(400, gin.H{
 			"err": err,

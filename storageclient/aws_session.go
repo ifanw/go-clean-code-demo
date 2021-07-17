@@ -1,4 +1,4 @@
-package awss3
+package storageclient
 
 import (
 	"github.com/aws/aws-sdk-go/aws"
